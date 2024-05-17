@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple HTML Template</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Link to external CSS file -->
+</head>
+<body onload="alert('Loaded')">
+    <h1 id="header" onmouseout="showTextOut()" onmouseover="showText()">Welcome to Simple HTML Template</h1>
+    <p>This is a simple HTML template with buttons, headings, and paragraphs.</p>
+    <button onclick="sayHello()">Click me</button>
+    <button onclick="changeColors()">Click me to change BG colour</button>
+    <p>Lets play with mouse event!</p>
+
+    <form onsubmit="handleSubmit(); return false;"> <!-- Prevent default form submission -->
+        <label for="inputText">Enter Text:</label>
+        <input type="text" id="inputText" name="inputText">
+        <button type="submit">Submit</button>
+        <button type="reset">Reset</button>
+    </form>
+
+    <p id="submittedText"></p> <!-- Paragraph to display submitted text -->
+
+    <button onclick="changeFont()">Change Font to Wingdings</button>
+
+    <button onclick="changeButtonColor()">Change Button Color to Red</button> <!-- New button -->
+    <button onclick="changeButtonColorBlue()">Change Button Color to Blue</button> <!-- New button -->
+    <p>Lets play with objects!</p>
+
+    <form onsubmit="handlePersonForm(event);"> <!-- Pass event object to the function -->
+        <label for="firstName">First Name:</label>
+        <input type="text" id="firstName" name="firstName" required><br><br>
+        <label for="lastName">Last Name:</label>
+        <input type="text" id="lastName" name="lastName" required><br><br>
+        <label for="favFood">Favorite Food:</label>
+        <input type="text" id="favFood" name="favFood" required><br><br>
+        <button type="submit">Create Person Object</button>
+    </form>
+
+    <p id="submittedTextPerson"></p> <!-- Paragraph to display submitted text -->
+
+
+    <script>
+        function sayHello() {
+            alert('Hello World');
+        }
+
+        function changeColors() {
+            if(document.body.style.backgroundColor != "black") {
+                document.body.style.backgroundColor = "black";
+                document.body.style.color = "white";
+            } else {
+                document.body.style.backgroundColor = "white";
+                document.body.style.color = "black";
+            }
+        }
+
+        function showText() {
+            document.getElementById("header").textContent = "Hello class";
+        }
+
+        function showTextOut() {
+            document.getElementById("header").textContent = "Welcome to Simple HTML Template OUT";
+        }
+
+        function handleSubmit() {
+            var inputText = document.getElementById("inputText").value;
+            document.getElementById("submittedText").textContent = "Last Submitted Text: " + inputText;
+            alert("Submitted Text: " + inputText);
+        }
+
+        function changeFont() {
+            if(document.body.style.fontFamily != "Wingdings, sans-serif") {
+                document.body.style.fontFamily = "Wingdings, sans-serif";
+            } else {
+                document.body.style.fontFamily = "Arial, sans-serif";
+            }
+        }
+
+        function changeButtonColor() {
+            var buttons = document.getElementsByTagName("button");
+            for (var i = 0; i < buttons.length; i++) {
+                buttons[i].style.backgroundColor = "red";
+            }
+        }
+
+        function changeButtonColorBlue() {
+            var buttons = document.getElementsByTagName("button");
+            for (var i = 0; i < buttons.length; i++) {
+                buttons[i].style.backgroundColor = "#007bff";
+            }
+        }
+
+        function handlePersonForm(event) {
+            event.preventDefault(); // Prevent default form submission
+
+            // Get input values
+            var firstName = document.getElementById("firstName").value;
+            var lastName = document.getElementById("lastName").value;
+            var favFood = document.getElementById("favFood").value;
+
+            // Create person object
+            var person = {
+                firstName: firstName,
+                lastName: lastName,
+                favFood: favFood,
+                fullName: function() {
+                    return this.firstName + " " + this.lastName;
+                }
+            };
+
+            // Display person object
+            document.getElementById("submittedTextPerson").textContent = "Person Object: " + JSON.stringify(person) + '\n' + "Person Fullname: " + person.fullName();
+        }
+    </script>
+</body>
+</html>

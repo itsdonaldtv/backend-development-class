@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple HTML Template</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Link to external CSS file -->
+</head>
+<body onload="ShowLoaded()">
+    <h1 onmouseout="onHeaderMove()" onmouseover="onHeaderHover()" id="header">Welcome to Simple HTML Template</h1>
+    <p id="para">This is a simple HTML template with buttons, headings, and paragraphs.</p>
+    <button onclick="popUp()">Click me</button>
+    <button onclick="changeBG()">Change background</button>
+    <p>Feel free to add more content here!</p>
+    <form onsubmit="onHandle(); return false">
+        <label for="inputText">Enter text:</label>
+        <input type="text" id="inputText" name="inputText">
+        <button type="submit">Submit</button>
+        <button type="reset">Reset</button>
+    </form>
+    <p id="submittedText"></p>
+    <button onclick="changeFont()">Change to WingsDings</button>
+    <!-- <form onsubmit="handleSubmit(); return false;"> Prevent default form submission -->
+
+    <p>Enter your details</p>
+    <form onsubmit="onPersonHandle(event); return false">
+        <label for="firstnameInput">Enter first name: </label>
+        <input type="text" id="firstnameInput" name="firstnameInput"><br><br>
+
+        <label for="lastnameInput">Enter last name: </label>
+        <input type="text" id="lastnameInput" name="lastnameInput"><br><br>
+
+        <label for="favFoodInput">Favourite food: </label>
+        <input type="text" id="favFoodInput" name="favFoodInput"><br><br>
+
+        <button type="submit">Submit</button>
+    </form>
+
+    <script>
+        function showLoaded() {
+            alert('Happy Thursday!');
+        }
+        
+        function ShowLoaded() {
+            alert('Happy Friday!');
+        }
+
+        function onHeaderHover() {
+            document.getElementById("header").textContent = "Welcome to Pizza Making Class";
+        }
+
+        function onHeaderMove() {
+            document.getElementById("header").textContent = "Welcome to Thursdays Class";
+        }
+
+        function popUp() {
+            alert("Haha you clicked me.");
+        }
+
+        function changeBG() {
+            if(document.body.style.backgroundColor != "black") {
+                document.body.style.backgroundColor = "black";
+            } else {
+                document.body.style.backgroundColor = "white";
+            }
+        }
+
+        function onHandle() {
+            let submittedText = document.getElementById("inputText").value;
+            alert(submittedText);
+
+            document.getElementById('submittedText').textContent = "Last entered: " + submittedText;
+        }
+
+        function changeFont() {
+            // document.body.style.fontFamily = "Wingdings, sans-serif";
+            document.body.style.fontFamily = "Wingdings, sans-serif";
+        }
+
+        function onPersonHandle(event) {
+            let firstName = document.getElementById('firstnameInput').value;
+            let lastName = document.getElementById('lastnameInput').value;
+            let favFood = document.getElementById('favFoodInput').value;
+
+            let person = {
+                FirstName: firstName,
+                LastName: lastName,
+                FavouriteFood: favFood,
+                FullName: function() {
+                    let fullName = firstName + " " + lastName;
+                    return fullName;
+                }
+            }
+
+            alert(person.FullName() + "'s favourite food is " + person.FavouriteFood);
+        }
+    </script>
+</body>
+</html>
