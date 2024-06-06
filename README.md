@@ -30,3 +30,5 @@ Functions: https://www.w3schools.com/js/js_functions.asp
 Object basics: https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Objects/Basics
 
 I've included the template in /homework but feel free to make it your own!
+
+# Lesson 5
