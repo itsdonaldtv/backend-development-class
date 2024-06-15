@@ -1,0 +1,44 @@
+body {
+    font-family: Arial, sans-serif;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  #output {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+  
+  .function-card {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+  
+  .function-card h2 {
+    margin-top: 0;
+  }
+  
+  .function-card button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .function-card input[type="number"] {
+    padding: 5px;
+    margin-right: 10px;
+  }
+  
+  .function-card #greeting-output,
+  .function-card #area-output {
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 10px;
+  }
