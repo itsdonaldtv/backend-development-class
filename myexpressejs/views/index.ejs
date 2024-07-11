@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Example</title>
+</head>
+
+<body>
+    <header>
+        <%- include('partials/header.ejs') %>
+    </header>
+    <h1> <%= message %> </h1>
+
+    <%# Blah blah blah this won't be on the page%>
+    <%# Run my  code function %>
+    <% if(false) { %>
+        <p>True!</p>
+    <% } else { %>
+        <p> False! </p>
+    <% } %>
+
+    <ul>
+    <% for(let counter = 0; counter < data.length; counter++) { %>
+        <li><%= data[counter] %></li>
+    <% } %>
+    </ul>
+
+    <% if(data.length >= 2) { %>
+        <p> There are atleast 2 people on the list</p>
+    <% } %>
+
+    <form action="/page2" method="get">
+        <button type="submit">Go to page 2</button>
+    </form>
+
+</body>
+</html>
