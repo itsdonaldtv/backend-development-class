@@ -13,13 +13,16 @@ const port = 3000;
 // Set up middleware
 // Lets us parse URL encoded bodies 
 web_app.use(express.urlencoded({ extended: true }));
+web_app.use(express.json());
 
-// Serve static files from a directory
-// web_app.use(express.static('./'));
-
+let todos = [];
 // Create our web app on 'port' and run the provided function when running
 web_app.listen(port, () => {
     console.log("Server is running!");
+});
+
+web_app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'todos.html'));
 });
 
 // Get takes in 2 imports
@@ -46,9 +49,6 @@ web_app.get('/greet/:persons_name', (req, res) => {
     res.send(persons_name);
 });
 
-web_app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'index.html'));
-});
 
 web_app.post('/submit', (req, res) => {
     const { username, email } = req.body;

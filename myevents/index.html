@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript Events Demo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 20px;
+        }
+        .box {
+            width: 100px;
+            height: 100px;
+            background-color: #3498db;
+            margin: 10px 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>JavaScript Events Demo</h1>
+
+    <h2>1. Click Event</h2>
+    <button id="clickBtn">Click me</button>
+    <p id="clickResult"></p>
+
+    <h2>2. Mouse Events</h2>
+    <div id="mouseBox" class="box">Hover me</div>
+    <p id="mouseResult"></p>
+
+    <h2>3. Keyboard Event</h2>
+    <input type="text" id="keyInput" placeholder="Type here">
+    <p id="keyResult"></p>
+
+    <h2>4. Form Event</h2>
+    <form id="sampleForm">
+        <input type="text" id="formInput" placeholder="Enter your name">
+        <button type="submit">Submit</button>
+    </form>
+    <p id="formResult"></p>
+
+    <h2>5. Load Event</h2>
+    <p id="loadResult"></p>
+
+    <script src="script.js"></script>
+</body>
+</html>

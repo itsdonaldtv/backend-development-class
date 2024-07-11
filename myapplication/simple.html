@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Express Website Manipulation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Express Website Manipulation</h1>
+    <p>Current content: <span id="content">Default content</span></p>
+    <button onclick="updateContent('/update-content')">Update Content</button>
+    <button onclick="updateContent('/add-element')">Add Element</button>
+    <button onclick="updateContent('/change-style')">Change Style</button>
+
+    <script>
+        function updateContent(route) {
+            fetch(route)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.content) {
+                        document.getElementById('content').textContent = data.content;
+                    }
+                    if (data.newElement) {
+                        const newElem = document.createElement('p');
+                        newElem.textContent = data.newElement;
+                        document.body.appendChild(newElem);
+                    }
+                    if (data.style) {
+                        document.body.style.backgroundColor = data.style.backgroundColor;
+                        document.body.style.color = data.style.color;
+                    }
+                });
+        }
+    </script>
+</body>
+</html>
