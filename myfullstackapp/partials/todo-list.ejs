@@ -1,0 +1,34 @@
+<!-- views/partials/todo-list.ejs -->
+<div class="todo-list">
+    <h2>To-Do List</h2>
+    <ul class="list-group">
+      <% if (user.todos && user.todos.length > 0) { %>
+        <% user.todos.forEach(todo => { %>
+          <li class="list-group-item d-flex justify-content-between align-items-center <%= todo.completed ? 'list-group-item-success' : '' %>">
+            <span class="<%= todo.completed ? 'text-decoration-line-through' : '' %>">
+              <%= todo.text %>
+              <small class="text-muted"><%= new Date(todo.date).toLocaleDateString() %></small>
+            </span>
+            <div>
+              <% if (!todo.completed) { %>
+                <form action="/complete-todo/<%= todo._id %>" method="POST" class="d-inline">
+                  <button type="submit" class="btn btn-sm btn-success">Complete</button>
+                </form>
+              <% } %>
+              <form action="/remove-todo/<%= todo._id %>" method="POST" class="d-inline">
+                <button type="submit" class="btn btn-sm btn-danger">Remove</button>
+              </form>
+            </div>
+          </li>
+        <% }); %>
+      <% } else { %>
+        <li class="list-group-item">No todos yet!</li>
+      <% } %>
+    </ul>
+    <form action="/add-todo" method="POST" class="mt-3">
+      <div class="input-group">
+        <input type="text" name="todoText" class="form-control" placeholder="Add a new todo" required>
+        <button type="submit" class="btn btn-primary">Add</button>
+      </div>
+    </form>
+</div>
