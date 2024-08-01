@@ -48,13 +48,12 @@ const todoSchema = new mongoose.Schema({
     date: { type: Date, default: Date.now }
 });
 
-// USer schema
 const userSchema = new mongoose.Schema({
     username: { type: String, required: true, unique: true },
     password: { type: String, required: true },
     email: { type: String },
     createdAt: { type: Date, default: Date.now },
-    todos: [todoSchema]
+    todos: [todoSchema]  // This adds an array of todos to each user
 });
 
 userSchema.pre('save', async function(next) {
@@ -102,17 +101,16 @@ app.get('/', (req, res) => {
     res.render('home');
 });
 
+app.get('/error', (req, res) => {
+    res.render('error');
+});
+
 app.get('/register', (req, res) => {
     res.render('register');
 });
 
 app.get('/login', (req, res) => {
     res.render('login');
-});
-
-// New error redirect
-app.get('/error', (req, res) => {
-    res.render('error');
 });
 
 app.get('/welcome', isAuthenticated, async (req, res) => {
@@ -133,31 +131,34 @@ app.get('/logout', (req, res) => {
     });
 });
 
-// Middleware
-app.use(async(req, res, next) => {
-    if(req.session.userId) {
-        try {
-            req.user = await User.findById(req.session.userId);
-        } catch(error) {
-            console.error("Error getting user: ", error);
-        } 
+app.use(async (req, res, next) => {
+    if (req.session.userId) {
+      try {
+        req.user = await User.findById(req.session.userId);
+        next();
+      } catch (error) {
+        next(error);
+      }
+    } else {
+      next();
     }
-    next();
-});
+});  
   
 // To do functionality for user 
 app.post('/add-todo', isAuthenticated, async (req, res) => {
     const { todoText } = req.body;
-    const userId = req.user._id;
-
+    console.log('User object:', req.user);
+    console.log('Session:', req.session);
+    const userId = req.user._id; // Assuming you have user info in req.user
+  
     try {
-        await User.findByIdAndUpdate(userId, {
-            $push: { todos: { text: todoText }}
-        });
-        res.redirect('/welcome');
-    } catch(error) {
-        console.error('Error adding todo: ', error);
-        res.status(500).send('Error adding todo');
+      await User.findByIdAndUpdate(userId, {
+        $push: { todos: { text: todoText, date: new Date() } }
+      });
+      res.redirect('/welcome');
+    } catch (error) {
+      console.error('Error adding todo:', error);
+      res.status(500).send('Error adding todo');
     }
 });
 
@@ -165,33 +166,33 @@ app.post('/add-todo', isAuthenticated, async (req, res) => {
 app.post('/complete-todo/:todoId', isAuthenticated, async (req, res) => {
     const { todoId } = req.params;
     const userId = req.user._id;
-
+  
     try {
-        await User.updateOne(
-            { _id: userId, "todos._id": todoId },
-            { $set: { "todos.$.completed": true }}
-        );
-        res.redirect('/welcome');
-    } catch(error) {
-        console.error('Error completing todo: ', error);
-        res.status(500).send('Error completing todo');
+      await User.updateOne(
+        { _id: userId, "todos._id": todoId },
+        { $set: { "todos.$.completed": true } }
+      );
+      res.redirect('/welcome');
+    } catch (error) {
+      console.error('Error completing todo:', error);
+      res.status(500).send('Error completing todo');
     }
-});
+  });
 
 // Remove a todo
 app.post('/remove-todo/:todoId', isAuthenticated, async (req, res) => {
     const { todoId } = req.params;
     const userId = req.user._id;
-
+  
     try {
-        await User.updateOne(
-            { _id: userId },
-            { $pull: { todos: { _id: todoId }}}
-        );
-        res.redirect('/welcome');
-    } catch(error) {
-        console.error('Error removing todo: ', error);
-        res.status(500).send('Error removing todo');
+      await User.updateOne(
+        { _id: userId },
+        { $pull: { todos: { _id: todoId } } }
+      );
+      res.redirect('/welcome');
+    } catch (error) {
+      console.error('Error removing todo:', error);
+      res.status(500).send('Error removing todo');
     }
 });
 
